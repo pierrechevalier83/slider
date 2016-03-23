@@ -4,3 +4,8 @@ version = "0.1.0"
 authors = ["Pierre Chevalier <pierrechevalier83@hotmail.fr>"]
 
 [dependencies]
+piston = "0.17.0"
+piston2d-opengl_graphics = "0.23.0"
+piston2d-graphics = "0.13.0"
+pistoncore-glutin_window = "0.20.0"
+rand="0.3.0"
