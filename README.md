@@ -1,6 +1,7 @@
 # slider
 A slider puzzle written in Rust using the Piston library
 
+[![Build Status](https://travis-ci.org/pierrechevalier83/slider.svg?branch=master)](https://travis-ci.org/pierrechevalier83/slider)
 [![Clippy Linting Result](https://clippy.bashy.io/github/pierrechevalier83/slider/master/badge.svg)](https://clippy.bashy.io/github/pierrechevalier83/slider/master/log)
 
 ### Build steps
