@@ -8,7 +8,7 @@ A slider puzzle written in Rust using the Piston library
 cargo run
 
 ### TODO
-* main.rs: extract rendering logic and scaling logic
+* main.rs: extract and scaling logic
 * skin: allow image instead of color gradient
 * settings: make configurable
 * implement some kind of help functionality so that people know what to do
