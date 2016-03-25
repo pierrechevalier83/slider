@@ -10,11 +10,11 @@ pub mod grid;
 pub mod skin;
 pub mod settings;
 
-use piston::window::{ AdvancedWindow, WindowSettings };
+use piston::window::{AdvancedWindow, WindowSettings};
 use glutin_window::GlutinWindow as Window;
 use piston::event_loop::*;
-use opengl_graphics::{ GlGraphics, OpenGL };
-use graphics::{ Transformed };
+use opengl_graphics::{GlGraphics, OpenGL};
+use graphics::Transformed;
 use piston::input::*;
 
 use slider::*;
@@ -23,7 +23,7 @@ use point::Point;
 
 struct App {
     gl: GlGraphics,
-    slider: Slider
+    slider: Slider,
 }
 
 const LIGHT_GRAY: [f32; 4] = [0.3, 0.3, 0.3, 1.0];
@@ -36,7 +36,10 @@ const RESOLUTION_Y: f64 = CELL_SIZE * N_ROWS as f64 + 2f64 * (LINING + MARGIN);
 struct Render;
 
 impl Render {
-    pub fn render_cell(c: &graphics::Context, gl: &mut GlGraphics, transform: [[f64; 3]; 2], color: [f32; 4]) {
+    pub fn render_cell(c: &graphics::Context,
+                       gl: &mut GlGraphics,
+                       transform: [[f64; 3]; 2],
+                       color: [f32; 4]) {
         let square = graphics::rectangle::square(0f64, 0f64, CELL_SIZE - 1f64);
         let mut rectangle = graphics::Rectangle::new(color);
         rectangle.shape = graphics::rectangle::Shape::Round(4.0, 60);
@@ -66,40 +69,41 @@ impl App {
 
             // draw a white border around the game board
             let rect_border = graphics::Rectangle::new_border(LIGHT_GRAY, LINING);
-            rect_border.draw([
-                MARGIN - LINING,
-                MARGIN - LINING,
-                (CELL_SIZE * settings::N_COLS as f64) + 1.8 * LINING,
-                (CELL_SIZE * settings::N_ROWS as f64) + 1.8 * LINING,
-            ], &c.draw_state, c.transform, gl);
+            rect_border.draw([MARGIN - LINING,
+                              MARGIN - LINING,
+                              (CELL_SIZE * settings::N_COLS as f64) + 1.8 * LINING,
+                              (CELL_SIZE * settings::N_ROWS as f64) + 1.8 * LINING],
+                             &c.draw_state,
+                             c.transform,
+                             gl);
 
             Render::render_game_board(&c, gl, use_slider);
         });
     }
-    
+
     fn handle_key_input(&mut self, key: keyboard::Key) {
         match key {
             Key::Left => {
                 self.slider.left();
-            },
+            }
 
-            Key::Right => { 
+            Key::Right => {
                 self.slider.right();
-            },
+            }
 
             Key::Up => {
                 self.slider.up();
-            },
+            }
 
-            Key::Down => { 
+            Key::Down => {
                 self.slider.down();
-            },
+            }
 
-            Key::Space => { 
+            Key::Space => {
                 self.slider.shuffle();
-            },
+            }
 
-            _ => { }
+            _ => {}
         }
     }
 }
@@ -111,16 +115,17 @@ fn main() {
 fn start_app() {
     let opengl = OpenGL::V2_1;
 
-    let mut window: Window = WindowSettings::new("Slider", [RESOLUTION_X as u32, RESOLUTION_Y as u32]).
-        exit_on_esc(true).
-        opengl(opengl).
-        build().
-        unwrap();
-    
+    let mut window: Window = WindowSettings::new("Slider",
+                                                 [RESOLUTION_X as u32, RESOLUTION_Y as u32])
+                                 .exit_on_esc(true)
+                                 .opengl(opengl)
+                                 .build()
+                                 .unwrap();
+
     let mut app = App {
         gl: GlGraphics::new(opengl),
         slider: Slider::new(),
-    };  
+    };
 
     let mut events = window.events();
     while let Some(e) = events.next(&mut window) {

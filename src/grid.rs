@@ -22,7 +22,7 @@ fn fill_original_grid() -> Vec<i32> {
 
 impl Grid {
     pub fn new() -> Grid {
-        Grid{
+        Grid {
             values: fill_original_grid(),
             n_cols: N_COLS as usize,
             rng: rand::thread_rng(),
@@ -34,7 +34,7 @@ impl Grid {
         self.values[self.index(pos) as usize]
     }
 
-    pub fn set_cell(&mut self, pos: Point, val : i32) {
+    pub fn set_cell(&mut self, pos: Point, val: i32) {
         assert!(self.fits(pos));
         let i = self.index(pos) as usize;
         self.values[i] = val;

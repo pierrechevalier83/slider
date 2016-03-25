@@ -2,14 +2,12 @@ use point::Point;
 use grid::Grid;
 
 pub struct Slider {
-    grid: Grid
+    grid: Grid,
 }
 
 impl Slider {
     pub fn new() -> Slider {
-        Slider {
-            grid: Grid::new(),
-        }
+        Slider { grid: Grid::new() }
     }
 
     pub fn get_grid_cell(&self, pos: Point) -> i32 {
@@ -36,7 +34,7 @@ impl Slider {
         self.grid.shuffle();
     }
 
-    /* Private methods */
+    // Private methods
     fn empty_slot(&self) -> Point {
         self.grid.find_empty_cell()
     }
@@ -46,4 +44,3 @@ impl Slider {
         self.grid.swap(hole, pos);
     }
 }
-
