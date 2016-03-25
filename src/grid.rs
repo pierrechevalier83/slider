@@ -20,6 +20,12 @@ fn fill_original_grid() -> Vec<i32> {
     g
 }
 
+impl Default for Grid {
+    fn default() -> Grid {
+        Grid::new()
+    }
+}
+
 impl Grid {
     pub fn new() -> Grid {
         Grid {

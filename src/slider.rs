@@ -4,7 +4,11 @@ use grid::Grid;
 pub struct Slider {
     grid: Grid,
 }
-
+impl Default for Slider {
+    fn default() -> Slider {
+        Slider::new()
+    }
+}
 impl Slider {
     pub fn new() -> Slider {
         Slider { grid: Grid::new() }
