@@ -44,9 +44,7 @@ impl App {
     }
 
     fn new() -> App {
-        App {
-            slider: Slider::new(),
-        }
+        App { slider: Slider::new() }
     }
 }
 
@@ -56,10 +54,11 @@ fn main() {
 
 fn start_app() {
     let window: PistonWindow = WindowSettings::new("Slider",
-                                                 [RESOLUTION_X as u32, skin::RESOLUTION_Y as u32])
-                                 .exit_on_esc(true)
-                                 .build()
-                                 .unwrap();
+                                                   [RESOLUTION_X as u32,
+                                                    skin::RESOLUTION_Y as u32])
+                                   .exit_on_esc(true)
+                                   .build()
+                                   .unwrap();
     let mut app = App::new();
 
     for e in window {

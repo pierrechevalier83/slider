@@ -33,16 +33,17 @@ pub const RESOLUTION_Y: f64 = CELL_SIZE * N_ROWS as f64 + 2f64 * (LINING + MARGI
 pub struct Render;
 
 impl Render {
-    pub fn render_cell<G>(c: &Context, g: &mut G,
-                          transform: [[f64; 3]; 2],
-                          color: [f32; 4]) where G: Graphics {
+    pub fn render_cell<G>(c: &Context, g: &mut G, transform: [[f64; 3]; 2], color: [f32; 4])
+        where G: Graphics
+    {
         let mut rectangle = Rectangle::new(color);
         let square = rectangle::square(0f64, 0f64, CELL_SIZE - 1f64);
         rectangle.shape = rectangle::Shape::Round(4.0, 60);
         rectangle.draw(square, &c.draw_state, transform, g);
     }
 
-    pub fn render_game_board<G>(c: &Context, g: &mut G, slider: &Slider) where G: Graphics
+    pub fn render_game_board<G>(c: &Context, g: &mut G, slider: &Slider)
+        where G: Graphics
     {
         for col in 0..N_COLS as i32 {
             for row in 0..N_ROWS as i32 {
@@ -54,7 +55,9 @@ impl Render {
         }
     }
 
-    pub fn render_border<G>(c: &Context, g: &mut G) where G : Graphics {
+    pub fn render_border<G>(c: &Context, g: &mut G)
+        where G: Graphics
+    {
         // draw a white border around the game board
         let rect_border = Rectangle::new_border(LIGHT_GRAY, LINING);
         rect_border.draw([MARGIN - LINING,
@@ -66,7 +69,9 @@ impl Render {
                          g);
     }
 
-    pub fn render_all<G>(slider: &Slider, c: &Context, g: &mut G) where G: Graphics {
+    pub fn render_all<G>(slider: &Slider, c: &Context, g: &mut G)
+        where G: Graphics
+    {
         clear(BLACK, g);
         Render::render_border(&c, g);
         Render::render_game_board(&c, g, slider);
