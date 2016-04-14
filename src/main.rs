@@ -7,7 +7,7 @@ pub mod grid;
 pub mod skin;
 pub mod settings;
 
-use piston_window::{Button, Context, Graphics, Key, PistonWindow, PressEvent, WindowSettings};
+use piston_window::{Button, Key, PistonWindow, PressEvent, WindowSettings};
 use slider::*;
 use settings::*;
 
@@ -16,10 +16,10 @@ struct App {
 }
 
 impl App {
-    fn render<G>(&mut self, c: &Context, g: &mut G) where G: Graphics {
-        // so that we can access inside closure
-        let use_slider = &self.slider;
-        skin::Render::render_all(use_slider, c, g);
+    fn render(&mut self, w: &PistonWindow) {
+        w.draw_2d(|c, g| {
+            skin::Render::render_all(&self.slider, &c, g);
+        });
     }
 
     fn handle_key_input(&mut self, key: Key) {
@@ -59,14 +59,10 @@ fn start_app() {
     };
 
     for e in window {
-        e.draw_2d(|c, g| {
-            app.render(&c, g);
-        });
+        app.render(&e);
         if let Some(Button::Keyboard(key)) = e.press_args() {
             app.handle_key_input(key);
-            e.draw_2d(|c, g| {
-                app.render(&c, g);
-            });
+            app.render(&e);
         };
     }
 }
