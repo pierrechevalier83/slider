@@ -42,6 +42,12 @@ impl App {
             _ => {}
         }
     }
+
+    fn new() -> App {
+        App {
+            slider: Slider::new(),
+        }
+    }
 }
 
 fn main() {
@@ -54,9 +60,7 @@ fn start_app() {
                                  .exit_on_esc(true)
                                  .build()
                                  .unwrap();
-    let mut app = App {
-        slider: Slider::new(),
-    };
+    let mut app = App::new();
 
     for e in window {
         app.render(&e);
