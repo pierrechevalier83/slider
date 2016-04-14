@@ -1,19 +1,16 @@
-extern crate graphics;
+extern crate piston_window;
 
-use opengl_graphics::{GlGraphics, OpenGL};
-use graphics::Transformed;
+use piston_window::*;
 use point::Point;
-use grid;
-use slider;
+use grid::EMPTY_CELL;
 use settings;
 use settings::*;
 use slider::Slider;
-use piston::input::*;
 
 pub const BLACK: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
 
 pub fn get_shape_color(cell: i32) -> [f32; 4] {
-    if cell == grid::EMPTY_CELL {
+    if cell == EMPTY_CELL {
         BLACK
     } else {
         let num_tiles = N_COLS * N_ROWS - 1;
@@ -36,44 +33,42 @@ pub const RESOLUTION_Y: f64 = CELL_SIZE * N_ROWS as f64 + 2f64 * (LINING + MARGI
 pub struct Render;
 
 impl Render {
-    pub fn render_cell(c: &graphics::Context,
-                       gl: &mut GlGraphics,
-                       transform: [[f64; 3]; 2],
-                       color: [f32; 4]) {
-        let square = graphics::rectangle::square(0f64, 0f64, CELL_SIZE - 1f64);
-        let mut rectangle = graphics::Rectangle::new(color);
-        rectangle.shape = graphics::rectangle::Shape::Round(4.0, 60);
-        rectangle.draw(square, &c.draw_state, transform, gl);
+    pub fn render_cell<G>(c: &Context, g: &mut G,
+                          transform: [[f64; 3]; 2],
+                          color: [f32; 4]) where G: Graphics {
+        let mut rectangle = Rectangle::new(color);
+        let square = rectangle::square(0f64, 0f64, CELL_SIZE - 1f64);
+        rectangle.shape = rectangle::Shape::Round(4.0, 60);
+        rectangle.draw(square, &c.draw_state, transform, g);
     }
 
-    pub fn render_game_board(c: &graphics::Context, gl: &mut GlGraphics, slider: &Slider) {
+    pub fn render_game_board<G>(c: &Context, g: &mut G, slider: &Slider) where G: Graphics
+    {
         for col in 0..N_COLS as i32 {
             for row in 0..N_ROWS as i32 {
                 let color = get_shape_color(slider.get_grid_cell(Point::new(col, row)));
                 let (x, y) = (col as f64 * CELL_SIZE, row as f64 * CELL_SIZE);
                 let transform = c.transform.trans(MARGIN, MARGIN).trans(x, y);
-                Render::render_cell(&c, gl, transform, color);
+                Render::render_cell(&c, g, transform, color);
             }
         }
     }
 
-    pub fn render_all(gl: &mut GlGraphics, slider: &Slider, args: &RenderArgs) {
-        gl.draw(args.viewport(), |c, gl| {
-            // clear the viewport
-            graphics::clear(BLACK, gl);
+    pub fn render_border<G>(c: &Context, g: &mut G) where G : Graphics {
+        // draw a white border around the game board
+        let rect_border = Rectangle::new_border(LIGHT_GRAY, LINING);
+        rect_border.draw([MARGIN - LINING,
+                          MARGIN - LINING,
+                          (CELL_SIZE * settings::N_COLS as f64) + 1.8 * LINING,
+                          (CELL_SIZE * settings::N_ROWS as f64) + 1.8 * LINING],
+                         &c.draw_state,
+                         c.transform,
+                         g);
+    }
 
-            // draw a white border around the game board
-            let rect_border = graphics::Rectangle::new_border(LIGHT_GRAY, LINING);
-            rect_border.draw([MARGIN - LINING,
-                              MARGIN - LINING,
-                              (CELL_SIZE * settings::N_COLS as f64) + 1.8 * LINING,
-                              (CELL_SIZE * settings::N_ROWS as f64) + 1.8 * LINING],
-                             &c.draw_state,
-                             c.transform,
-                             gl);
-
-            Render::render_game_board(&c, gl, slider);
-        });
-
+    pub fn render_all<G>(slider: &Slider, c: &Context, g: &mut G) where G: Graphics {
+        clear(LIGHT_GRAY, g);
+        Render::render_border(&c, g);
+        Render::render_game_board(&c, g, slider);
     }
 }
