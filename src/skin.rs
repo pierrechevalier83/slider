@@ -67,7 +67,7 @@ impl Render {
     }
 
     pub fn render_all<G>(slider: &Slider, c: &Context, g: &mut G) where G: Graphics {
-        clear(LIGHT_GRAY, g);
+        clear(BLACK, g);
         Render::render_border(&c, g);
         Render::render_game_board(&c, g, slider);
     }
