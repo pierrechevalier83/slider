@@ -2,6 +2,9 @@
 name = "slider"
 version = "0.2.0"
 dependencies = [
+ "find_folder 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gfx_device_gl 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "image 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "piston_window 0.42.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.14 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -155,6 +158,11 @@ dependencies = [
  "num 0.1.31 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.18 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
+
+[[package]]
+name = "find_folder"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "flate2"

@@ -2,14 +2,16 @@ extern crate piston_window;
 extern crate rand;
 
 pub mod app;
-pub mod point;
 pub mod grid;
+pub mod colors;
+pub mod point;
+pub mod settings;
 pub mod skin;
 pub mod slider;
-pub mod settings;
+pub mod textures;
 
-use piston_window::{Button, PistonWindow, PressEvent, WindowSettings};
-use settings::*;
+use piston_window::{PistonWindow, WindowSettings};
+use settings::RESOLUTION_X;
 use app::App;
 
 fn main() {
@@ -19,13 +21,8 @@ fn main() {
                                    .exit_on_esc(true)
                                    .build()
                                    .unwrap();
-    let mut app = App::new();
 
-    for e in window {
-        app.render(&e);
-        if let Some(Button::Keyboard(key)) = e.press_args() {
-            app.handle_key_input(key);
-            app.render(&e);
-        };
-    }
+    let mut app = App::new(window);
+    app.load_texture();
+    app.run();
 }

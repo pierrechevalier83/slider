@@ -1,17 +1,34 @@
 extern crate piston_window;
 
-use piston_window::{Key, PistonWindow};
-use slider::Slider;
+use piston_window::{Button, PressEvent, Key, PistonWindow};
+
 use skin::Render;
+use slider::Slider;
 
 pub struct App {
     slider: Slider,
+    window: PistonWindow,
+    skin: Render,
 }
 
 impl App {
+    pub fn run(&mut self) {
+        for e in self.window.clone() {
+            self.render(&e);
+            if let Some(Button::Keyboard(key)) = e.press_args() {
+                self.handle_key_input(key);
+                self.render(&e);
+            };
+        }
+    }
+
+    pub fn load_texture(&mut self) {
+        self.skin.load_texture(&mut self.window.clone());
+    }
+
     pub fn render(&mut self, w: &PistonWindow) {
         w.draw_2d(|c, g| {
-            Render::render_all(&self.slider, &c, g);
+            self.skin.render_all(&c, g, &self.slider);
         });
     }
 
@@ -36,7 +53,11 @@ impl App {
         }
     }
 
-    pub fn new() -> App {
-        App { slider: Slider::new() }
+    pub fn new(w: PistonWindow) -> App {
+        App {
+            slider: Slider::new(),
+            window: w,
+            skin: Render::new(),
+        }
     }
 }
