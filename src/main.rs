@@ -1,58 +1,18 @@
 extern crate piston_window;
 extern crate rand;
 
-pub mod slider;
+pub mod app;
 pub mod point;
 pub mod grid;
 pub mod skin;
+pub mod slider;
 pub mod settings;
 
-use piston_window::{Button, Key, PistonWindow, PressEvent, WindowSettings};
-use slider::*;
+use piston_window::{Button, PistonWindow, PressEvent, WindowSettings};
 use settings::*;
-
-struct App {
-    slider: Slider,
-}
-
-impl App {
-    fn render(&mut self, w: &PistonWindow) {
-        w.draw_2d(|c, g| {
-            skin::Render::render_all(&self.slider, &c, g);
-        });
-    }
-
-    fn handle_key_input(&mut self, key: Key) {
-        match key {
-            Key::Left => {
-                self.slider.left();
-            }
-            Key::Right => {
-                self.slider.right();
-            }
-            Key::Up => {
-                self.slider.up();
-            }
-            Key::Down => {
-                self.slider.down();
-            }
-            Key::Space => {
-                self.slider.shuffle();
-            }
-            _ => {}
-        }
-    }
-
-    fn new() -> App {
-        App { slider: Slider::new() }
-    }
-}
+use app::App;
 
 fn main() {
-    start_app();
-}
-
-fn start_app() {
     let window: PistonWindow = WindowSettings::new("Slider",
                                                    [RESOLUTION_X as u32,
                                                     skin::RESOLUTION_Y as u32])
