@@ -37,6 +37,9 @@ impl Slider {
     pub fn shuffle(&mut self) {
         self.grid.shuffle();
     }
+    pub fn solve(&mut self) {
+        self.grid.sort();
+    }
 
     // Private methods
     fn empty_slot(&self) -> Point {

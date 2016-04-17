@@ -1,7 +1,7 @@
 // magic numbers (need to devise some kind of input mechanism for configuration)
 
 // image (optional)
-pub const IMAGE_PATH: &'static str = "butterfly.jpg";
+pub const IMAGE_PATH: &'static str = "knight.png";
 
 // colour (if can't load image, will use a gradient based on this color instead)
 pub const RED_BASE: f32 = 1.0;

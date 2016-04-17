@@ -62,6 +62,10 @@ impl Grid {
         self.rng.shuffle(&mut self.values.as_mut_slice());
     }
 
+    pub fn sort(&mut self) {
+        self.values = fill_original_grid();
+    }
+
     fn find(&self, val: i32) -> Point {
         self.position(self.values.iter().position(|&r| r == val).unwrap() as i32)
     }

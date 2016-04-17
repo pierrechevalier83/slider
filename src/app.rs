@@ -49,6 +49,9 @@ impl App {
             Key::Space => {
                 self.slider.shuffle();
             }
+            Key::S => {
+                self.slider.solve();
+            }
             _ => {}
         }
     }
