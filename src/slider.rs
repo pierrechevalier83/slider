@@ -66,6 +66,10 @@ impl Slider {
         self.grid.sort();
     }
 
+    pub fn is_sorted(& self) -> bool {
+        self.grid.is_sorted()
+    }
+
     // Private methods
     fn empty_slot(&self) -> Point {
         self.grid.find_empty_cell()

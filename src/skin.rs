@@ -8,6 +8,7 @@ use settings::{MARGIN_RATIO, RESOLUTION_X, LINING_RATIO, N_COLS, N_ROWS};
 use colors;
 use colors::Colors;
 use textures::Textures;
+use font::Font;
 use slider::Slider;
 
 
@@ -21,6 +22,7 @@ pub const RESOLUTION_Y: f64 = CELL_SIZE * N_ROWS as f64 + 2f64 * (LINING + MARGI
 pub struct Render {
     colors: Colors,
     textures: Textures,
+    font: Font,
 }
 
 impl Render {
@@ -28,11 +30,16 @@ impl Render {
         Render {
             colors: Colors::new(),
             textures: Textures::new(),
+            font: Font::new(),
         }
     }
 
     pub fn load_texture(&mut self, window: &mut PistonWindow) {
         self.textures.load(window);
+    }
+
+    pub fn load_font(&mut self, window: &mut PistonWindow) {
+        self.font.load(window);
     }
 
     fn render_cell_as_color(c: &Context, g: &mut G2d, transform: [[f64; 3]; 2], color: [f32; 4]) {
@@ -89,5 +96,21 @@ impl Render {
         clear(colors::BG_COLOR, g);
         Render::render_border(&c, g);
         Render::render_game_board(self, &c, g, slider);
+    }
+
+    pub fn render_success(&mut self, c: &Context, g: &mut G2d) {
+        use piston_window::*;
+        use settings::RESOLUTION_X;
+        use skin::RESOLUTION_Y;
+        let font = self.font.get_font();
+                // TODO: font = 100, from settings
+        let congratulations = "Well done!";
+        let transform = c.transform.trans((RESOLUTION_X)/ 2f64 - (100f64 * congratulations.len() as f64 / 4f64), RESOLUTION_Y / 2f64);
+        text::Text::new_color([0.0, 1.0, 0.0, 1.0], 100).draw(
+        congratulations,
+        font,
+        &c.draw_state,
+        transform, g
+       );
     }
 }

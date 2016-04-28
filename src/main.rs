@@ -4,6 +4,7 @@ extern crate rand;
 pub mod app;
 pub mod grid;
 pub mod colors;
+pub mod font;
 pub mod point;
 pub mod settings;
 pub mod skin;
@@ -24,5 +25,6 @@ fn main() {
 
     let mut app = App::new(window);
     app.load_texture();
+    app.load_font();
     app.run();
 }

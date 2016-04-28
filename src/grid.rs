@@ -58,6 +58,10 @@ impl Grid {
         self.values = fill_original_grid();
     }
 
+    pub fn is_sorted(&self) -> bool {
+        self.values == fill_original_grid()
+    }
+
     fn find(&self, val: i32) -> Point {
         self.position(self.values.iter().position(|&r| r == val).unwrap() as i32)
     }
