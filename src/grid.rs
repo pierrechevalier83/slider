@@ -1,13 +1,10 @@
 /// Grid maps 2D Points into a 2D domain (internally, a vector)
-extern crate rand;
-use rand::Rng;
 use point::Point;
 use settings::{N_COLS, N_ROWS};
 
 pub struct Grid {
     values: Vec<i32>,
     n_cols: usize,
-    rng: rand::ThreadRng,
 }
 
 pub const EMPTY_CELL: i32 = -1;
@@ -31,7 +28,6 @@ impl Grid {
         Grid {
             values: fill_original_grid(),
             n_cols: N_COLS as usize,
-            rng: rand::thread_rng(),
         }
     }
 
@@ -58,10 +54,6 @@ impl Grid {
         self.find(EMPTY_CELL)
     }
 
-    pub fn shuffle(&mut self) {
-        self.rng.shuffle(&mut self.values.as_mut_slice());
-    }
-
     pub fn sort(&mut self) {
         self.values = fill_original_grid();
     }
@@ -70,11 +62,11 @@ impl Grid {
         self.position(self.values.iter().position(|&r| r == val).unwrap() as i32)
     }
 
-    fn n_cols(&self) -> i32 {
+    pub fn n_cols(&self) -> i32 {
         self.n_cols as i32
     }
 
-    fn n_rows(&self) -> i32 {
+    pub fn n_rows(&self) -> i32 {
         self.values.len() as i32 / self.n_cols as i32
     }
 
