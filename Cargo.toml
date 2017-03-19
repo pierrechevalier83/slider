@@ -1,11 +1,13 @@
 [package]
 name = "slider"
+description = "A sliding puzzle written in rust"
 version = "0.4.0"
-authors = ["Pierre Chevalier <pierrechevalier83@hotmail.fr>"]
+authors = ["Pierre Chevalier <pierrechevalier83@gmail.com>"]
+license = "MIT"
 
 [dependencies]
-gfx_device_gl = "0.13"
-find_folder = "0.3"
-image = "0.12"
-piston_window = "0.64"
-rand="0.3"
+gfx_device_gl = "0.13.0"
+find_folder = "0.3.0"
+image = "0.12.3"
+piston_window = "0.64.0"
+rand="0.3.15"
