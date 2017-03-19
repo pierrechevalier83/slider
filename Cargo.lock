@@ -1,6 +1,6 @@
 [root]
 name = "slider"
-version = "0.3.0"
+version = "0.4.0"
 dependencies = [
  "find_folder 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "gfx_device_gl 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",

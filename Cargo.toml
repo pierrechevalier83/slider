@@ -1,11 +1,11 @@
 [package]
 name = "slider"
-version = "0.3.0"
+version = "0.4.0"
 authors = ["Pierre Chevalier <pierrechevalier83@hotmail.fr>"]
 
 [dependencies]
-gfx_device_gl = "*"
-find_folder = "*"
-image = "*"
-piston_window = "*"
-rand="*"
+gfx_device_gl = "0.13"
+find_folder = "0.3"
+image = "0.12"
+piston_window = "0.64"
+rand="0.3"
