@@ -16,15 +16,15 @@ use settings::RESOLUTION_X;
 use app::App;
 
 fn main() {
-    let window: PistonWindow = WindowSettings::new("Slider",
+    let mut window: PistonWindow = WindowSettings::new("Slider",
                                                    [RESOLUTION_X as u32,
                                                     skin::RESOLUTION_Y as u32])
                                    .exit_on_esc(true)
                                    .build()
                                    .unwrap();
 
-    let mut app = App::new(window);
-    app.load_texture();
-    app.load_font();
-    app.run();
+    let mut app = App::new();
+    app.load_texture(&mut window);
+    app.load_font(&mut window);
+    app.run(&mut window);
 }

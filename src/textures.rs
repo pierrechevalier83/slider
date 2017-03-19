@@ -8,7 +8,7 @@ use grid::EMPTY_CELL;
 use settings::{N_COLS, N_ROWS, IMAGE_PATH};
 
 pub struct Textures {
-    cell_textures: Vec<Option<G2dTexture<'static>>>,
+    cell_textures: Vec<Option<G2dTexture>>,
 }
 
 impl Textures {
@@ -19,7 +19,7 @@ impl Textures {
     pub fn load(&mut self, window: &mut PistonWindow) {
         let assets = find_folder::Search::ParentsThenKids(3, 3).for_folder("assets").unwrap();
         let path = assets.join(IMAGE_PATH);
-        let factory = &mut *window.factory.borrow_mut();
+        let factory = &mut window.factory;
         let maybe_img = image::open(path);
         if maybe_img.is_ok() {
             let mut img = image::imageops::resize(maybe_img.as_ref().unwrap(),
@@ -50,7 +50,7 @@ impl Textures {
         }
     }
 
-    pub fn get_shape_texture(&self, cell: i32) -> &Option<G2dTexture<'static>> {
+    pub fn get_shape_texture(&self, cell: i32) -> &Option<G2dTexture> {
         if cell == EMPTY_CELL {
             &self.cell_textures[(N_COLS * N_ROWS - 1) as usize]
         } else {

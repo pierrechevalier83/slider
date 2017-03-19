@@ -8,37 +8,36 @@ use slider::Slider;
 
 pub struct App {
     slider: Slider,
-    window: PistonWindow,
     skin: Render,
     player_moved_last: bool,
 }
 
 impl App {
-    pub fn run(&mut self) {
-        for e in self.window.clone() {
-            self.render(&e);
+    pub fn run(&mut self, window: &mut PistonWindow) {
+        while let Some(e) = window.next() {
+            self.render(&e, window);
             if let Some(Button::Keyboard(key)) = e.press_args() {
                 self.handle_key_input(key);
-                self.render(&e);
+                self.render(&e, window);
             };
         }
     }
 
-    pub fn load_texture(&mut self) {
-        self.skin.load_texture(&mut self.window.clone());
+    pub fn load_texture(&mut self, window: &mut PistonWindow) {
+        self.skin.load_texture(window);
     }
 
-    pub fn load_font(&mut self) {
-        self.skin.load_font(&mut self.window.clone());
+    pub fn load_font(&mut self, window: &mut PistonWindow) {
+        self.skin.load_font(window);
     }
 
-    pub fn render(&mut self, w: &PistonWindow) {
-        w.draw_2d(|c, g| {
-            self.skin.render_all(&c, g, &self.slider);
-            if self.is_success() {
-                self.skin.render_success(&c, g);
-            }
-        });
+    pub fn render<E>(&mut self, event: &E, window: &mut PistonWindow) where E : piston_window::GenericEvent {
+            window.draw_2d(event, |c, g| {
+                self.skin.render_all(&c, g, &self.slider);
+                if self.is_success() {
+                    self.skin.render_success(&c, g);
+                }
+            });
     }
 
     fn is_success(&self) -> bool {
@@ -75,10 +74,9 @@ impl App {
         }
     }
 
-    pub fn new(w: PistonWindow) -> App {
+    pub fn new() -> App {
         App {
             slider: Slider::new(),
-            window: w,
             skin: Render::new(),
             player_moved_last: false,
         }

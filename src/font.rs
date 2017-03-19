@@ -16,8 +16,8 @@ impl Font {
         let assets = find_folder::Search::ParentsThenKids(3, 3)
             .for_folder("assets").unwrap();
         let ref font = assets.join("OpenSans-Regular.ttf");
-        let factory = window.factory.borrow().clone();
-        self.font = Some(Glyphs::new(font, factory).unwrap());
+        let ref factory = window.factory;
+        self.font = Some(Glyphs::new(font, factory.clone()).unwrap());
     }
 
     pub fn get_font(&mut self) -> &mut Glyphs {
